@@ -59,8 +59,8 @@ else
 fi
 
 # use local eic-shell if it exists
-if [ -x ${BASEDIR}/eic-shell ] ; then
-  EICSHELL=${BASEDIR}/eic-shell
+if [ -n "${EICSHELL}" -a -x "$(which ${EICSHELL})" ] ; then
+  EICSHELL="$(which ${EICSHELL})"
 else
   # bind base dir for lustre symlinked systems
   EICSHELL="${SINGULARITY} exec -B ${BASEDIR} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:nightly/ eic-shell"
