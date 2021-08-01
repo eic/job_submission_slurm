@@ -3,14 +3,14 @@ image: eicweb.phy.anl.gov:4567/eic/juggler/juggler:latest
 submit_single:
   stage: test
   script:
-    - scripts/submit.sh single test/e-_1GeV_45to135deg.steer 100 && test -f RECO/SINGLE/e-/1GeV/45to135deg/e-_1GeV_45to135deg.root
+    - EICSHELL=bash scripts/submit.sh single test/e-_1GeV_45to135deg.steer 100 && test -f RECO/SINGLE/e-/1GeV/45to135deg/e-_1GeV_45to135deg.root
 
 submit_hepmc3_local:
   stage: test
   script:
-    - scripts/submit.sh hepmc3 EVGEN/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 && test -f RECO/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
+    - EICSHELL=bash scripts/submit.sh hepmc3 EVGEN/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 && test -f RECO/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
 
 submit_hepmc3_remote:
   stage: test
   script:
-    - scripts/submit.sh hepmc3 EVGEN/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 && test -f RECO/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
+    - EICSHELL=bash scripts/submit.sh hepmc3 EVGEN/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 && test -f RECO/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
