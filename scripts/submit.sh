@@ -1,10 +1,8 @@
 #!/bin/bash
 #SBATCH --output=simulate_%A_%4a.out
-#SBATCH --time=06:00:00
+#SBATCH --time=24:00:00
 #SBATCH --mem-per-cpu=4G
 #SBATCH --cpus-per-task=1
-#SBATCH --mail-user=wdconinc@gmail.com
-#SBATCH --mail-type=ALL
 
 # check arguments
 if [ $# -lt 2 ] ; then
@@ -17,6 +15,10 @@ if [ $# -lt 2 ] ; then
   echo "where N tasks of n_chunk events will be dispatched."
   echo
   echo "Note: The job with task ID 1 will start with the first event."
+  echo
+  echo "Additional useful options to sbatch are:"
+  echo " --mail-user=$USER@$HOSTNAME"
+  echo " --mail-type=ALL"
   echo
   echo "In interactive use, the number of events per task is still honored,"
   echo "but the sequence always starts from the first event."
