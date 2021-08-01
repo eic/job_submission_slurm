@@ -51,12 +51,19 @@ else
   BASEDIR=$(realpath $(dirname ${0}))
 fi
 
+# find singularity
+if which singularity ; then
+  SINGULARITY=$(which singularity)
+else
+  SINGULARITY="/cvmfs/oasis.opensciencegrid.org/mis/singularity/bin/singularity"
+fi
+
 # use local eic-shell if it exists
 if [ -x ${BASEDIR}/eic-shell ] ; then
   EICSHELL=${BASEDIR}/eic-shell
 else
   # bind base dir for lustre symlinked systems
-  EICSHELL="singularity exec -B ${BASEDIR} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:nightly/ eic-shell"
+  EICSHELL="${SINGULARITY} exec -B ${BASEDIR} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:nightly/ eic-shell"
 fi
 
 # dispatch job
