@@ -66,10 +66,18 @@ else
   EICSHELL="${SINGULARITY} exec -B ${BASEDIR} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:nightly/ eic-shell"
 fi
 
+# use campaign dir if specified, otherwise default to /opt/campaigns
+if [ -n "${CAMPAIGNS}" ] ; then
+  echo "Using campaign directory ${CAMPAIGNS} per \$CAMPAIGNS"
+else
+  CAMPAIGNS=/opt/campaigns
+  echo "Using default campaign directory ${CAMPAIGNS}"
+fi
+
 # dispatch job
 cat << EOF | ${EICSHELL}
 
-  /opt/campaigns/${TYPE}/scripts/run.sh ${INPUT_FILE} ${EVENTS_PER_TASK} ${SLURM_ARRAY_TASK_ID:-}
+  ${CAMPAIGNS}/${TYPE}/scripts/run.sh ${INPUT_FILE} ${EVENTS_PER_TASK} ${SLURM_ARRAY_TASK_ID:-}
 
 EOF
 
