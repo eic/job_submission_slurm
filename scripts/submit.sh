@@ -52,32 +52,27 @@ else
 fi
 
 # find singularity
-if which singularity ; then
-  SINGULARITY=$(which singularity)
-else
-  SINGULARITY="/cvmfs/oasis.opensciencegrid.org/mis/singularity/bin/singularity"
+if [ -z "${SINGULARITY:-}" ] ; then
+  if which singularity 2> /dev/null ; then
+    SINGULARITY=$(which singularity)
+  else
+    SINGULARITY="/cvmfs/oasis.opensciencegrid.org/mis/singularity/bin/singularity"
+  fi
 fi
+echo "Using SINGULARITY=${SINGULARITY}"
 
-# use local eic-shell if it exists
-if [ -n "${EICSHELL}" -a -x "$(which ${EICSHELL})" ] ; then
-  EICSHELL="$(which ${EICSHELL})"
-else
+# find eic-shell
+if [ -z "${EICSHELL:-}" ] ; then
   # bind base dir for lustre symlinked systems
-  EICSHELL="${SINGULARITY} exec -B ${BASEDIR} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:nightly/ eic-shell"
+  BINDPATH="/$(realpath ${BASEDIR} | cut -d "/" -f2)"
+  EICSHELL="${SINGULARITY} exec -B ${BINDPATH} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:${JUGGLER_TAG:-nightly}/ eic-shell"
 fi
-
-# use campaign dir if specified, otherwise default to /opt/campaigns
-if [ -n "${CAMPAIGNS}" ] ; then
-  echo "Using campaign directory ${CAMPAIGNS} per \$CAMPAIGNS"
-else
-  CAMPAIGNS=/opt/campaigns
-  echo "Using default campaign directory ${CAMPAIGNS}"
-fi
+echo "Using EICSHELL=${EICSHELL}"
 
 # dispatch job
 cat << EOF | ${EICSHELL}
 
-  ${CAMPAIGNS}/${TYPE}/scripts/run.sh ${INPUT_FILE} ${EVENTS_PER_TASK} ${SLURM_ARRAY_TASK_ID:-}
+  ${CAMPAIGNS:-/opt/campaigns}/${TYPE}/scripts/run.sh ${INPUT_FILE} ${EVENTS_PER_TASK} ${SLURM_ARRAY_TASK_ID:-}
 
 EOF
 
