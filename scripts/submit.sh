@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --output=LOG/simulate_%A_%4a.out
+#SBATCH --output=LOG/SLURM/%A_%4a.out
 #SBATCH --time=24:00:00
 #SBATCH --mem-per-cpu=4G
 #SBATCH --cpus-per-task=1
