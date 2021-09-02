@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --output=LOG/SLURM/%A_%4a.out
 #SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=4G
+#SBATCH --mem-per-cpu=3G
 #SBATCH --cpus-per-task=1
 
 # check arguments
