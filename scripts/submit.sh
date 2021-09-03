@@ -33,6 +33,7 @@ fi
 
 # startup
 date
+echo "Arguments: $*"
 
 # Parse arguments
 # - type of simulation
