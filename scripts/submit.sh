@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --output=LOG/SLURM/%A_%4a.out
+#SBATCH --mail-type=FAIL,TIME_LIMIT,TIME_LIMIT_90
 #SBATCH --time=24:00:00
 #SBATCH --mem-per-cpu=3G
 #SBATCH --cpus-per-task=1
