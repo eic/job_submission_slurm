@@ -2,9 +2,9 @@
 
 ACCOUNT=${1:-eic}
 
-export JUGGLER_TAG=4.0-acadia-stable
-#export CAMPAIGNS=/lustre03/project/6061913/wdconinc/EIC/campaigns
-#export RECONSTRUCTION=/lustre03/project/6061913/wdconinc/EIC/benchmarks/reconstruction_benchmarks
+export JUGGLER_TAG=nightly
+export CAMPAIGNS=/lustre19/expphy/volatile/eic/wdconinc/campaigns
+export RECONSTRUCTION=/lustre19/expphy/volatile/eic/wdconinc/benchmarks/reconstruction_benchmarks
 export USEHEPMC3=true
 
 sbatch --account=${ACCOUNT} --parsable --array=1-28 --time=24:00:00 scripts/submit.sh hepmc3 EVGEN/SPECTROSCOPY/psi2s_10_100.hepmc 20000

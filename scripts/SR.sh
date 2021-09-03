@@ -1,14 +1,12 @@
 #!/bin/bash
 
-ACCOUNT=${1:-eic}
 EMAIL=${2:-${USER}@jlab.org}
 
-export JUGGLER_TAG=nightly
-export CAMPAIGNS=$(realpath ~/EIC/campaigns)
-export RECONSTRUCTION=$(realpath ~/EIC/benchmarks/reconstruction_benchmarks)
-export USEHEPMC3=true
+export JUGGLER_TAG=master
+export CAMPAIGNS=/lustre19/expphy/volatile/eic/wdconinc/campaigns
+export USEHEPMC3=false
 
-SBATCH="sbatch --account=${ACCOUNT} --mail-user=${EMAIL} --parsable --array=1-50 --time=24:00:00"
+SBATCH="sbatch --mail-user=${EMAIL} --parsable --array=1-50 --time=24:00:00"
 
 ${SBATCH} scripts/submit.sh hepmc3 EVGEN/SR/SR.10GeV_5kVthreshold_hepmc/25098.hepmc 10000
 ${SBATCH} scripts/submit.sh hepmc3 EVGEN/SR/SR.10GeV_5kVthreshold_hepmc/25099.hepmc 10000
