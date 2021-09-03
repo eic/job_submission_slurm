@@ -49,6 +49,10 @@ shift
 # determine directory this is being run from
 if [ -n "$SLURM_JOB_ID" ] ;  then
   BASEDIR=$(realpath ${SLURM_SUBMIT_DIR})
+  INPUT_FILE_SHORT=${INPUT_FILE//EVGEN\//}
+  INPUT_FILE_SHORT=${INPUT_FILE_SHORT//SINGLE\//}
+  NAME=${INPUT_FILE_SHORT//\//_}_${EVENTS_PER_TASK}
+  scontrol update jobid=${SLURM_JOB_ID} Name=${NAME}
 else
   BASEDIR=$(realpath $(dirname ${0}))
 fi
