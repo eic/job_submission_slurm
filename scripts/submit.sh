@@ -54,8 +54,10 @@ if [ -n "$SLURM_JOB_ID" ] ;  then
   NAME=${INPUT_FILE_SHORT//\//_}_${EVENTS_PER_TASK}
   scontrol update jobid=${SLURM_JOB_ID} Name=${NAME}
 else
-  BASEDIR=$(realpath $(dirname ${0}))
+  BASEDIR=$(realpath $(dirname ${0})/..)
 fi
+cd ${BASEDIR}
+pwd
 
 # find singularity
 if [ -z "${SINGULARITY:-}" ] ; then
