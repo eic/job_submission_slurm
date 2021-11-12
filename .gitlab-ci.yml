@@ -3,14 +3,32 @@ image: eicweb.phy.anl.gov:4567/eic/juggler/juggler:latest
 submit_single:
   stage: test
   script:
-    - EICSHELL=bash scripts/submit.sh single test/e-_1GeV_45to135deg.steer 100 && test -f RECO/SINGLE/e-/1GeV/45to135deg/e-_1GeV_45to135deg.root
+    - mkdir -p EVGEN/CI/SINGLE/e-/1GeV/45to135deg && cp -f test/e-_1GeV_45to135deg.steer EVGEN/CI/SINGLE/e-/1GeV/45to135deg
+    - EICSHELL=bash COPYRECO=true scripts/submit.sh single EVGEN/CI/SINGLE/e-/1GeV/45to135deg/e-_1GeV_45to135deg.steer 100
+    - test -f RECO/*/CI/SINGLE/e-/1GeV/45to135deg/e-_1GeV_45to135deg.root
 
 submit_hepmc3_local:
   stage: test
   script:
-    - EICSHELL=bash scripts/submit.sh hepmc3 test/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 && test -f RECO/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
+    - mkdir -p EVGEN/CI && cp -f test/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc EVGEN/CI/
+    - EICSHELL=bash COPYRECO=true scripts/submit.sh hepmc3 EVGEN/CI/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20
+    - test -f RECO/*/CI/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
+
+submit_hepmc3_local_0001:
+  stage: test
+  script:
+    - mkdir -p EVGEN/CI && cp -f test/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc EVGEN/CI/
+    - EICSHELL=bash COPYRECO=true scripts/submit.sh hepmc3 EVGEN/CI/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 1
+    - test -f RECO/*/CI/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
 
 submit_hepmc3_remote:
   stage: test
   script:
-    - EICSHELL=bash scripts/submit.sh hepmc3 EVGEN/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 && test -f RECO/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
+    - EICSHELL=bash COPYRECO=true scripts/submit.sh hepmc3 EVGEN/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20
+    - test -f RECO/*/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
+
+submit_hepmc3_remote_0001:
+  stage: test
+  script:
+    - EICSHELL=bash COPYRECO=true scripts/submit.sh hepmc3 EVGEN/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.hepmc 20 1
+    - test -f RECO/*/TEST/DIS_NC_Q2gt10_crossDivNrgCrab_25mRad_5x41_v2_20ev.root
