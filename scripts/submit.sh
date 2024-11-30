@@ -73,7 +73,7 @@ echo "Using SINGULARITY=${SINGULARITY}"
 if [ -z "${EICSHELL:-}" ] ; then
   # bind base dir for lustre symlinked systems
   BINDPATH="/$(realpath ${BASEDIR} | cut -d "/" -f2)"
-  EICSHELL="${SINGULARITY} exec -B ${BINDPATH} /cvmfs/singularity.opensciencegrid.org/eicweb/jug_xl:${JUGGLER_TAG:-nightly} eic-shell"
+  EICSHELL="${SINGULARITY} exec -B ${BINDPATH} /cvmfs/singularity.opensciencegrid.org/eicweb/eic_xl:${JUGGLER_TAG:-nightly} eic-shell"
 fi
 echo "Using EICSHELL=${EICSHELL}"
 
